@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Download, X, Share2, Sparkles } from 'lucide-react';
+import { Download, X, Share2, Sparkles, Shield, Cpu } from 'lucide-react';
 
 export default function PWAInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -25,10 +25,10 @@ export default function PWAInstallPrompt() {
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      // Slight delay so the user first sees the loaded page smoothly
+      // Display smoothly after page load
       const timer = setTimeout(() => {
         setShowPrompt(true);
-      }, 2500);
+      }, 2000);
       return () => clearTimeout(timer);
     };
 
@@ -43,7 +43,7 @@ export default function PWAInstallPrompt() {
       const timer = setTimeout(() => {
         setIsIOS(true);
         setShowIOSTip(true);
-      }, 4000);
+      }, 3500);
       return () => clearTimeout(timer);
     }
 
@@ -74,77 +74,86 @@ export default function PWAInstallPrompt() {
   return (
     <aside 
       aria-label="Install NeuralEye App"
-      className="pwa-install-banner fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 sm:max-w-md z-[9999] animate-fade-in"
+      className="pwa-install-banner"
     >
-      <div className="relative overflow-hidden rounded-2xl border border-white/20 dark:border-white/10 bg-white/90 dark:bg-slate-900/95 backdrop-blur-xl p-4 shadow-2xl transition-all">
-        {/* Glow accent */}
-        <div className="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
+      <div className="pwa-card-glass">
+        {/* Ambient Aura Glow */}
+        <div className="pwa-aura-glow" />
 
-        <div className="flex items-start gap-3.5">
-          {/* App Icon */}
-          <div className="relative flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden shadow-md border border-white/30 dark:border-slate-700 bg-gradient-to-br from-blue-600 to-indigo-700 p-1 flex items-center justify-center">
+        {/* Top Header Row: Icon + Title + Non-overlapping Close Button */}
+        <div className="pwa-header-row">
+          <div className="pwa-app-icon-wrap">
             <img 
               src="/neuraleye-icon.png" 
-              alt="NeuralEye App Icon" 
-              className="w-full h-full object-contain rounded-lg"
+              alt="NeuralEye 3D Vision" 
+              className="pwa-app-icon"
               onError={(e) => {
-                e.target.style.display = 'none';
+                e.target.src = '/apple-touch-icon.png';
               }}
             />
           </div>
 
-          {/* Text Content */}
-          <div className="flex-1 min-w-0 pr-6">
-            <div className="flex items-center gap-1.5 mb-0.5">
-              <span className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">
-                Install NeuralEye
-              </span>
-              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                <Sparkles className="w-2.5 h-2.5" /> App
+          <div className="pwa-title-wrap">
+            <div className="pwa-badge-row">
+              <span className="pwa-app-title">NeuralEye</span>
+              <span className="pwa-pill-badge">
+                <Sparkles size={10} /> 3D VISION
               </span>
             </div>
             
-            {showPrompt && (
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-snug">
-                Install on your device for instant fullscreen access and zero cloud latency.
-              </p>
-            )}
-
-            {showIOSTip && isIOS && (
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-snug">
-                Tap <Share2 className="w-3 h-3 inline mx-0.5 text-blue-500" /> <strong>Share</strong> and select <strong>&quot;Add to Home Screen&quot;</strong> to install.
-              </p>
-            )}
-
-            {/* Actions */}
-            {showPrompt && (
-              <div className="mt-3 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleInstallClick}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 active:scale-95 rounded-lg shadow-sm transition-all"
-                >
-                  <Download className="w-3.5 h-3.5" /> Install App
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDismiss}
-                  className="px-2.5 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
-                >
-                  Not now
-                </button>
-              </div>
-            )}
+            <p className="pwa-app-subtitle">
+              {showPrompt 
+                ? "Install on your device for instant fullscreen access and zero cloud latency." 
+                : "Add to Home Screen for fast standalone app access."}
+            </p>
           </div>
 
-          {/* Dismiss button */}
+          {/* Clean circular close button with guaranteed clearance */}
           <button
             type="button"
             onClick={handleDismiss}
             aria-label="Dismiss install prompt"
-            className="absolute top-3 right-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg transition-colors"
+            className="pwa-close-btn"
           >
-            <X className="w-4 h-4" />
+            <X size={15} />
+          </button>
+        </div>
+
+        {/* Feature Micro-Badges */}
+        <div className="pwa-pills-row">
+          <span className="pwa-micro-pill inline-flex items-center gap-1">
+            <Cpu size={11} className="text-blue-500" /> 0.0ms WASM SIMD
+          </span>
+          <span className="pwa-micro-pill inline-flex items-center gap-1">
+            <Shield size={11} className="text-emerald-500" /> 100% On-Device
+          </span>
+        </div>
+
+        {/* Actions Row */}
+        <div className="pwa-actions-row">
+          {showPrompt && (
+            <button
+              type="button"
+              onClick={handleInstallClick}
+              className="pwa-install-btn"
+            >
+              <Download size={15} />
+              <span>Install App</span>
+            </button>
+          )}
+
+          {showIOSTip && isIOS && (
+            <div className="pwa-ios-instructions">
+              Tap <Share2 size={13} className="inline mx-1 text-blue-500" /> then select <strong>&quot;Add to Home Screen&quot;</strong>
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={handleDismiss}
+            className="pwa-dismiss-btn"
+          >
+            Not now
           </button>
         </div>
       </div>
