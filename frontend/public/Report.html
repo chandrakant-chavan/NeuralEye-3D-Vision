@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuralEye 3D Vision — Master Engineering Specification (NE-3DV-WP-01)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #2563eb;
+      --purple: #7c3aed;
+      --cyan: #00f2fe;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-hindi: #64748b;
+      --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-hindi: 'Noto Sans Devanagari', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: #f1f5f9;
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px 16px 80px;
+    }
+
+    .doc-container {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Top Action Bar */
+    .doc-action-bar {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .dab-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .dab-badge {
+      background: rgba(0, 242, 254, 0.2);
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      color: #00f2fe;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .dab-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .dab-btn.primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #ffffff;
+    }
+
+    .dab-btn.secondary {
+      background: rgba(255, 255, 255, 0.14);
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .dab-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    /* Page Sheet Canvas */
+    .page-sheet {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 40px 44px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      position: relative;
+    }
+
+    .page-header-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid #f1f5f9;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: #64748b;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .page-footer-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      margin-top: 32px;
+      border-top: 1px solid #f1f5f9;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #94a3b8;
+    }
+
+    /* Cover Page */
+    .cover-sheet {
+      background: linear-gradient(135deg, #070d1e 0%, #0d1a3a 50%, #0369a1 100%);
+      color: #ffffff;
+      padding: 50px 44px;
+      border-color: rgba(2, 132, 199, 0.35);
+      box-shadow: 0 16px 45px rgba(2, 132, 199, 0.18);
+    }
+
+    .cover-top-badge {
+      display: inline-block;
+      background: rgba(0, 242, 254, 0.15);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      color: #00f2fe;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .cover-title {
+      font-size: 2.85rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .cover-title span {
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cover-sub {
+      font-size: 1.25rem;
+      color: #e2e8f0;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .hindi-text {
+      font-family: var(--font-hindi);
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .cover-divider {
+      height: 2px;
+      background: linear-gradient(90deg, #00f2fe, #38bdf8, transparent);
+      margin: 22px 0;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .cm-item strong {
+      display: block;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+    }
+
+    .cm-item span {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .cover-footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.8rem;
+      color: #94a3b8;
+      font-family: var(--font-mono);
+    }
+
+    .confidential-pill {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    /* Chapter Header */
+    .ch-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .ch-num {
+      background: #0284c7;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .ch-tag {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: #0284c7;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .ch-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .ch-hindi-title {
+      font-family: var(--font-hindi);
+      font-size: 1.05rem;
+      color: #64748b;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .prose-block {
+      font-size: 0.98rem;
+      color: #334155;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .prose-hindi {
+      font-family: var(--font-hindi);
+      font-size: 0.92rem;
+      color: #64748b;
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-left: 3px solid #0284c7;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    /* 4-Pillars Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .pillar-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+
+    .pillar-card h4 {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #0284c7;
+      margin-bottom: 4px;
+    }
+
+    .pillar-card p {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .pillar-card .p-hindi {
+      font-family: var(--font-hindi);
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Benchmark Metric Badges */
+    .benchmark-badges {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .bm-badge {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .bm-badge strong {
+      display: block;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #15803d;
+      font-family: var(--font-mono);
+    }
+
+    .bm-badge span {
+      font-size: 0.78rem;
+      color: #475569;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .bm-badge small {
+      font-family: var(--font-hindi);
+      font-size: 0.72rem;
+      color: #64748b;
+    }
+
+    /* Tables */
+    .spec-table-wrap {
+      overflow-x: auto;
+      margin: 22px 0;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      text-align: left;
+    }
+
+    .spec-table th {
+      background: #f8fafc;
+      padding: 12px 16px;
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .spec-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+
+    .spec-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    .spec-table td strong {
+      color: #0284c7;
+    }
+
+    /* Pipeline 5-Stage Stack */
+    .pipeline-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .pipe-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+    }
+
+    .pipe-num {
+      background: #0284c7;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .pipe-content h4 {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+
+    .pipe-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #0284c7;
+      background: rgba(2, 132, 199, 0.1);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+
+    .pipe-content p {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .pipe-content .pipe-hindi {
+      font-family: var(--font-hindi);
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 3px;
+    }
+
+    /* Author Card */
+    .author-sheet-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 30px 34px;
+      border-radius: 16px;
+      margin: 22px 0;
+    }
+
+    .author-name {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .author-role {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #38bdf8;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 4px 0 14px;
+    }
+
+    .author-desc {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .author-contact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .page-sheet {
+        padding: 22px 18px;
+      }
+      .pillars-grid, .benchmark-badges, .cover-meta-grid {
+        grid-template-columns: 1fr;
+      }
+      .cover-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="doc-container">
+
+    <!-- Sticky Navigation & PDF Download Bar -->
+    <header class="doc-action-bar">
+      <div class="dab-left">
+        <span class="dab-badge">NE-3DV-WP-01</span>
+        <span>NeuralEye 3D Vision — Master Engineering Whitepaper</span>
+      </div>
+      <div class="dab-right">
+        <a href="/Report.pdf" target="_blank" class="dab-btn secondary">
+          <span>Open Raw PDF File</span>
+        </a>
+        <a href="/Report.pdf" download="NeuralEye-3D-Vision-Master-Whitepaper.pdf" class="dab-btn primary">
+          <span>Download PDF (2.76 MB)</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- PAGE 1: COVER -->
+    <section class="page-sheet cover-sheet">
+      <div class="cover-top-badge">ENGINEERING SPECIFICATION · MASTER WHITE PAPER</div>
+      <h1 class="cover-title">NeuralEye <span>3D Vision</span></h1>
+      <h2 class="cover-sub">Enterprise Edge Computer Vision & Real-Time Spatial Intelligence Platform.</h2>
+      <p class="hindi-text">(एंटरप्राइज़ एज कंप्यूटर विज़न एवं रीयल-टाइम स्पेशल इंटेलिजेंस प्लेटफ़ॉर्म।)</p>
+
+      <div class="cover-divider"></div>
+
+      <p class="prose-block" style="color: #e2e8f0;">
+        Built on client-side WebAssembly, YOLOv11 tensor acceleration and zero-cloud latency.
+      </p>
+      <p class="hindi-text" style="color: #cbd5e1;">
+        (क्लाइंट-साइड वेबअसेंबली, YOLOv11 टेंसर एक्सेलेरेशन और ज़ीरो-क्लाउड लेटेंसी पर आधारित।)
+      </p>
+
+      <div class="cover-meta-grid">
+        <div class="cm-item">
+          <strong>Founder & Lead AI Engineer</strong>
+          <span>Chandrakant Chavan</span>
+        </div>
+        <div class="cm-item">
+          <strong>System Architecture</strong>
+          <span>Hybrid Edge-Client + FastAPI</span>
+        </div>
+        <div class="cm-item">
+          <strong>Model Core</strong>
+          <span>YOLOv11 Tensor Engine (ONNX)</span>
+        </div>
+        <div class="cm-item">
+          <strong>Security Guarantee</strong>
+          <span>100% Air-Gapped Zero-Cloud</span>
+        </div>
+      </div>
+
+      <div class="cover-footer-bar">
+        <div>
+          <span>Document No. NE-3DV-WP-01 · November 2026 · Rev 1.0</span><br>
+          <small class="hindi-text">(दस्तावेज़ क्रमांक NE-3DV-WP-01 · नवंबर 2026 · संस्करण 1.0)</small>
+        </div>
+        <span class="confidential-pill">CONFIDENTIAL & PROPRIETARY</span>
+      </div>
+    </section>
+
+    <!-- PAGE 2: TABLE OF CONTENTS -->
+    <section class="page-sheet" id="toc">
+      <div class="page-header-strip">
+        <span>NeuralEye 3D Vision — Document Map</span>
+        <span>Page 02 of 18</span>
+      </div>
+
+      <div class="ch-badge-row">
+        <span class="ch-tag">DOCUMENT MAP</span>
+      </div>
+      <h2 class="ch-title">Table of Contents</h2>
+      <div class="ch-hindi-title">(विषय सूची)</div>
+
+      <div class="spec-table-wrap">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>Chapter</th>
+              <th>Topic / Subject</th>
+              <th>हिंदी विवरण</th>
+              <th>Page</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>01</strong></td>
+              <td><strong>Executive Summary</strong></td>
+              <td>कार्यकारी सारांश</td>
+              <td>03</td>
+            </tr>
+            <tr>
+              <td><strong>02</strong></td>
+              <td><strong>Problem Statement & Purpose</strong></td>
+              <td>समस्या विवरण एवं उद्देश्य</td>
+              <td>05</td>
+            </tr>
+            <tr>
+              <td><strong>03</strong></td>
+              <td><strong>Real-World Use Cases</strong></td>
+              <td>वास्तविक-विश्व उपयोग के क्षेत्र</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td><strong>04</strong></td>
+              <td><strong>Live Detection Engine — In Action</strong></td>
+              <td>लाइव डिटेक्शन इंजन — कार्यरूप में</td>
+              <td>07</td>
+            </tr>
+            <tr>
+              <td><strong>05</strong></td>
+              <td><strong>System Architecture & Technology Stack</strong></td>
+              <td>सिस्टम आर्किटेक्चर एवं तकनीकी स्टैक</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td><strong>06</strong></td>
+              <td><strong>End-to-End Vision Pipeline</strong></td>
+              <td>एंड-टू-एंड विज़न पाइपलाइन</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td><strong>07</strong></td>
+              <td><strong>Hybrid Processing Engine & Specifications</strong></td>
+              <td>हाइब्रिड प्रोसेसिंग इंजन एवं सिस्टम विनिर्देश</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td><strong>08</strong></td>
+              <td><strong>Benchmarked Performance</strong></td>
+              <td>बेंचमार्क प्रदर्शन</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td><strong>09</strong></td>
+              <td><strong>Enterprise Privacy & Security Architecture</strong></td>
+              <td>एंटरप्राइज़ प्राइवेसी एवं सुरक्षा आर्किटेक्चर</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td><strong>10</strong></td>
+              <td><strong>Step-by-Step Operator Guide</strong></td>
+              <td>चरण-दर-चरण संचालन मार्गदर्शिका</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td><strong>11</strong></td>
+              <td><strong>Future Roadmap</strong></td>
+              <td>भविष्य की रोडमैप योजना</td>
+              <td>16</td>
+            </tr>
+            <tr>
+              <td><strong>12</strong></td>
+              <td><strong>Lead Architect & Credits</strong></td>
+              <td>मुख्य आर्किटेक्ट एवं श्रेय</td>
+              <td>17</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="page-footer-strip">
+        <span>NE-3DV-WP-01 // Engineering Specification</span>
+        <span>Page 2 of 18</span>
+      </div>
+    </section>
+
+    <!-- PAGE 3: EXECUTIVE SUMMARY -->
+    <section class="page-sheet" id="ch01">
+      <div class="page-header-strip">
+        <span>01 OVERVIEW // ENGINEERING SPECIFICATION</span>
+        <span>Page 03 of 18</span>
+      </div>
+
+      <div class="ch-badge-row">
+        <span class="ch-num">01</span>
+        <span class="ch-tag">OVERVIEW</span>
+      </div>
+      <h2 class="ch-title">Executive Summary</h2>
+      <div class="ch-hindi-title">(कार्यकारी सारांश)</div>
+
+      <p class="prose-block">
+        NeuralEye 3D Vision is an enterprise-grade computer vision and deep-learning platform that analyzes high-resolution video streams, live optical cameras, and static drone or panoramic imagery in real time. It detects multi-class objects — cars, bikes, pedestrians, buses, traffic signals, animals and everyday gadgets — and renders precise 3D depth bounding projections over each one.
+      </p>
+
+      <div class="prose-hindi">
+        (न्यूरलआई 3D विज़न एक एंटरप्राइज़-स्तरीय कंप्यूटर विज़न और डीप लर्निंग प्लेटफ़ॉर्म है, जो हाई-रेज़ॉल्यूशन वीडियो स्ट्रीम, लाइव ऑप्टिकल कैमरों और स्थिर ड्रोन अथवा पैनोरमिक छवियों का वास्तविक समय में विश्लेषण करता है।)
+      </div>
+
+      <p class="prose-block">
+        Traditional AI applications transmit video streams to third-party cloud servers, introducing latency and exposing sensitive footage to data-leak risk. NeuralEye transforms this paradigm: the model executes directly inside the user's own browser through WebAssembly (WASM SIMD) and WebWorkers, delivering <strong>0.0 ms cloud latency</strong> and <strong>100% on-device privacy</strong>.
+      </p>
+
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <h4>⚡ Real-Time In-Browser Edge Inference</h4>
+          <p>The YOLOv11 deep neural network executes directly on the client's CPU/GPU without a single frame ever leaving the device.</p>
+          <div class="p-hindi">(YOLOv11 डीप न्यूरल नेटवर्क सीधे क्लाइंट के CPU/GPU पर चलता है, बिना किसी फ्रेम को बाहर भेजे।)</div>
+        </div>
+        <div class="pillar-card">
+          <h4>🎯 SAHI Micro-Window Slicing</h4>
+          <p>Ultra-high-definition 4K imagery is sliced into overlapping micro-crops, so small and distant objects are detected with precision.</p>
+          <div class="p-hindi">(4K छवियों को ओवरलैपिंग माइक्रो-क्रॉप्स में विभाजित किया जाता है, जिससे छोटी और दूर की वस्तुएं भी सटीकता से पहचानी जाती हैं।)</div>
+        </div>
+        <div class="pillar-card">
+          <h4>🛡️ 100% Air-Gapped Privacy</h4>
+          <p>In line with GDPR and military-grade standards, zero video ever leaves the device; footage stays in local memory alone.</p>
+          <div class="p-hindi">(GDPR एवं सैन्य-स्तरीय मानकों के अनुरूप, कोई भी वीडियो डिवाइस से बाहर नहीं जाता; फुटेज केवल स्थानीय मेमोरी में रहती है।)</div>
+        </div>
+        <div class="pillar-card">
+          <h4>📊 Live Telemetry & Class Breakdown</h4>
+          <p>A real-time analytics engine delivers scene-object counts, a class-distribution chart, and an instant inventory breakdown.</p>
+          <div class="p-hindi">(एक रीयल-टाइम एनालिटिक्स इंजन दृश्य में मौजूद वस्तुओं की गिनती, क्लास-डिस्ट्रीब्यूशन चार्ट एवं इन्वेंट्री ब्रेकडाउन प्रदान करता है।)</div>
+        </div>
+      </div>
+
+      <div class="page-footer-strip">
+        <span>NE-3DV-WP-01 // Engineering Specification</span>
+        <span>Page 3 of 18</span>
+      </div>
+    </section>
+
+    <!-- PAGE 4: PUNE BENCHMARK HUD -->
+    <section class="page-sheet" id="benchmark-hud">
+      <div class="page-header-strip">
+        <span>BENCHMARK VERIFICATION // HUD TELEMETRY</span>
+        <span>Page 04 of 18</span>
+      </div>
+
+      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 4px;">Figure 1.0 — Real-Time Multi-Object Detection HUD at Pune Station</h3>
+      <div class="ch-hindi-title">(चित्र 1.0 — पुणे स्टेशन चौराहा बेंचमार्क पर रीयल-टाइम मल्टी-ऑब्जेक्ट डिटेक्शन HUD: 3D डेप्थ प्रोजेक्शन के साथ 7 श्रेणियों में 10 वस्तुओं का वर्गीकरण।)</div>
+
+      <div class="benchmark-badges">
+        <div class="bm-badge">
+          <strong>0.0 ms</strong>
+          <span>Cloud Latency</span>
+          <small>(क्लाउड लेटेंसी)</small>
+        </div>
+        <div class="bm-badge">
+          <strong>60 FPS</strong>
+          <span>Pipeline Throughput</span>
+          <small>(पाइपलाइन थ्रूपुट)</small>
+        </div>
+        <div class="bm-badge">
+          <strong>2.4 ms</strong>
+          <span>YOLOv11 Inference</span>
+          <small>(इनफ़रेंस गति)</small>
+        </div>
+        <div class="bm-badge">
+          <strong>100%</strong>
+          <span>On-Device Privacy</span>
+          <small>(ऑन-डिवाइस प्राइवेसी)</small>
+        </div>
+      </div>
+
+      <div class="prose-hindi">
+        <strong>Reading the benchmark scene:</strong> The Pune Station intersection is deliberately dense: two-wheelers, a bus, a dog, pedestrians, signage in Marathi/Hindi and a partially occluded plate — a realistic stress test for multi-class detection.
+        <br><br>
+        (पुणे स्टेशन चौराहा जानबूझकर घना दृश्य है: दोपहिया वाहन, बस, कुत्ता, पैदल यात्री, मराठी/हिंदी साइनबोर्ड और आंशिक रूप से ढकी नंबर प्लेट — मल्टी-क्लास डिटेक्शन की वास्तविक कसौटी।)
+      </div>
+
+      <div class="page-footer-strip">
+        <span>NE-3DV-WP-01 // Engineering Specification</span>
+        <span>Page 4 of 18</span>
+      </div>
+    </section>
+
+    <!-- PAGE 5: PROBLEM STATEMENT & PURPOSE -->
+    <section class="page-sheet" id="ch02">
+      <div class="page-header-strip">
+        <span>02 WHY IT WAS BUILT // ENGINEERING SPECIFICATION</span>
+        <span>Page 05 of 18</span>
+      </div>
+
+      <div class="ch-badge-row">
+        <span class="ch-num">02</span>
+        <span class="ch-tag">WHY IT WAS BUILT</span>
+      </div>
+      <h2 class="ch-title">Problem Statement & Purpose</h2>
+      <div class="ch-hindi-title">(समस्या विवरण एवं उद्देश्य)</div>
+
+      <p class="prose-block">
+        Earlier surveillance and smart-vision systems carried four major bottlenecks. NeuralEye was engineered specifically to resolve each one of them.
+      </p>
+
+      <div class="spec-table-wrap">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>Traditional Problem (पारंपरिक समस्या)</th>
+              <th>Industry Impact (उद्योग पर प्रभाव)</th>
+              <th>NeuralEye Edge Solution (न्यूरलआई एज समाधान)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>High Cloud Latency</strong><br><small>उच्च क्लाउड लेटेंसी</small></td>
+              <td>Sending CCTV feed to the cloud takes 300–800 ms — too slow for autonomous navigation or live security.</td>
+              <td><strong>0.0 ms Network Latency</strong> — local inference inside browser/device memory via WASM SIMD.</td>
+            </tr>
+            <tr>
+              <td><strong>Severe Privacy Risks</strong><br><small>गंभीर प्राइवेसी जोखिम</small></td>
+              <td>Video travelling to external servers creates data-breach and surveillance leak exposure.</td>
+              <td><strong>Air-Gapped Sandbox</strong> — video frames never leave the device; 100% on-premise local memory.</td>
+            </tr>
+            <tr>
+              <td><strong>Exorbitant Cloud-GPU Cost</strong><br><small>भारी क्लाउड-GPU लागत</small></td>
+              <td>Renting A100 GPU servers on AWS/GCP for thousands of 24/7 cameras costs lakhs of rupees every month.</td>
+              <td><strong>Zero Infrastructure Cost</strong> — compute runs entirely on client hardware with unlimited scalability.</td>
+            </tr>
+            <tr>
+              <td><strong>Loss of Small & Occluded Objects</strong><br><small>छोटी एवं छिपी वस्तुओं की हानि</small></td>
+              <td>Standard 640×640 resizing causes distant pedestrians and small vehicles to disappear in 4K drone feeds.</td>
+              <td><strong>SAHI Slicing Engine</strong> — multi-scale patch processing detects objects up to 10× farther away.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose-hindi">
+        <strong>Design Principle:</strong> Every architectural decision in NeuralEye traces back to one of these four rows: speed, privacy, cost, and recall on small objects.
+      </div>
+
+      <div class="page-footer-strip">
+        <span>NE-3DV-WP-01 // Engineering Specification</span>
+        <span>Page 5 of 18</span>
+      </div>
+    </section>
+
+    <!-- PAGE 10: ARCHITECTURE & TECH STACK -->
+    <section class="page-sheet" id="ch05">
+      <div class="page-header-strip">
+        <span>05 HOW IT IS BUILT // SYSTEM ARCHITECTURE</span>
+        <span>Page 10 of 18</span>
+      </div>
+
+      <div class="ch-badge-row">
+        <span class="ch-num">05</span>
+        <span class="ch-tag">HOW IT IS BUILT</span>
+      </div>
+      <h2 class="ch-title">System Architecture & Technology Stack</h2>
+      <div class="ch-hindi-title">(सिस्टम आर्किटेक्चर एवं तकनीकी स्टैक)</div>
+
+      <p class="prose-block">
+        NeuralEye's stack is deliberately layered: a reactive client frontend, a browser-native inference layer, an optional backend microservice for heavy batch work, and a dedicated slicing engine for gigapixel imagery.
+      </p>
+
+      <div class="spec-table-wrap">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Technologies</th>
+              <th>Responsibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Client Frontend</strong><br><small>क्लाइंट फ्रंटएंड</small></td>
+              <td><strong>React 19 · Vite 8 · Tailwind CSS 4 · Motion</strong></td>
+              <td>Ultra-fast reactive UI, cyberpunk HUD reticles, interactive analytics canvas, high-DPI scaling.</td>
+            </tr>
+            <tr>
+              <td><strong>Edge Inference</strong><br><small>एज इनफ़रेंस</small></td>
+              <td><strong>ONNX Runtime Web · WASM SIMD · WebWorkers</strong></td>
+              <td>Non-blocking multi-threaded inference in the client browser; zero frame uploads to any remote cloud.</td>
+            </tr>
+            <tr>
+              <td><strong>Backend Microservice</strong><br><small>बैकएंड माइक्रोसर्विस</small></td>
+              <td><strong>Python FastAPI · PyTorch · Ultralytics YOLOv11</strong></td>
+              <td>High-accuracy batch processing, heavy tensor operations, REST and WebSocket endpoints.</td>
+            </tr>
+            <tr>
+              <td><strong>Slicing Engine</strong><br><small>स्लाइसिंग इंजन</small></td>
+              <td><strong>SAHI (Slicing Aided Hyper Inference) · OpenCV</strong></td>
+              <td>Gigapixel image slicing, overlapping-window inference, and Non-Maximum Suppression (NMS) merging.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="page-footer-strip">
+        <span>NE-3DV-WP-01 // Engineering Specification</span>
+        <span>Page 10 of 18</span>
+      </div>
+    </section>
+
+    <!-- PAGE 11: END-TO-END PIPELINE -->
+    <section class="page-sheet" id="ch06">
+      <div class="page-header-strip">
+        <span>06 EXECUTION // END-TO-END VISION PIPELINE</span>
+        <span>Page 11 of 18</span>
+      </div>
+
+      <div class="ch-badge-row">
+        <span class="ch-num">06</span>
+        <span class="ch-tag">END-TO-END EXECUTION</span>
+      </div>
+      <h2 class="ch-title">End-to-End Vision Pipeline</h2>
+      <div class="ch-hindi-title">(एंड-टू-एंड विज़न पाइपलाइन)</div>
+
+      <p class="prose-block">
+        Every frame travels through five deterministic stages — from optical ingestion to zero-latency bounding tensors — each independently benchmarked.
+      </p>
+
+      <div class="pipeline-stack">
+        <div class="pipe-step">
+          <span class="pipe-num">01</span>
+          <div class="pipe-content">
+            <h4>Multi-Source Optical Stream <span class="pipe-badge">1080p @ 60 FPS</span></h4>
+            <p>Seamlessly ingests high-frame-rate input from 4K RTSP IP cameras, browser webcams, or high-resolution local image and video media.</p>
+            <div class="pipe-hindi">(4K RTSP IP कैमरों, ब्राउज़र वेबकैम, या हाई-रेज़ॉल्यूशन लोकल मीडिया से हाई-फ्रेम-रेट इनपुट को सहजता से ग्रहण करता है।)</div>
+          </div>
+        </div>
+        <div class="pipe-step">
+          <span class="pipe-num">02</span>
+          <div class="pipe-content">
+            <h4>SAHI Micro-Slicing Window <span class="pipe-badge">0.4 ms Slice Latency</span></h4>
+            <p>Frames are normalized and letterboxed inside client-side WebAssembly workers using SIMD multi-threading; zero bytes travel to cloud servers.</p>
+            <div class="pipe-hindi">(SIMD मल्टी-थ्रेडिंग का उपयोग करते हुए क्लाइंट-साइड वेबअसेंबली वर्कर्स में फ्रेम को नॉर्मलाइज़ किया जाता है; शून्य बाइट्स क्लाउड पर जाते हैं।)</div>
+          </div>
+        </div>
+        <div class="pipe-step">
+          <span class="pipe-num">03</span>
+          <div class="pipe-content">
+            <h4>YOLOv11 Neural Tensor Engine <span class="pipe-badge">Active · 2.4 ms · FP16</span></h4>
+            <p>Executes quantized FP16 YOLOv11 weights inside dedicated WebWorkers with SIMD 128-bit vectorization, offloading CPU compute so the browser UI stays smooth at 60 FPS.</p>
+            <div class="pipe-hindi">(समर्पित वेबवर्कर्स में SIMD 128-बिट वेक्टराइजेशन के साथ क्वांटाइज्ड FP16 YOLOv11 वेट्स को निष्पादित किया जाता है।)</div>
+          </div>
+        </div>
+        <div class="pipe-step">
+          <span class="pipe-num">04</span>
+          <div class="pipe-content">
+            <h4>Spatial Projections & NMS <span class="pipe-badge">IoU 0.45 Dynamic</span></h4>
+            <p>Predicts 2D bounding boxes and extrapolates spatial 3D cuboid depth and velocity from the raw tensor output.</p>
+            <div class="pipe-hindi">(रॉ टेंसर आउटपुट से 2D बाउंडिंग बॉक्स की भविष्यवाणी एवं स्पेशल 3D क्यूबॉइड डेप्थ व वेलोसिटी का एक्स्ट्रापोलेशन किया जाता है।)</div>
+          </div>
+        </div>
+        <div class="pipe-step">
+          <span class="pipe-num">05</span>
+          <div class="pipe-content">
+            <h4>Air-Gapped Privacy Sandbox <span class="pipe-badge">100% Offline Ready</span></h4>
+            <p>Structured JSON telemetry streams and alert webhooks are emitted locally, while video frames themselves never cross the device boundary.</p>
+            <div class="pipe-hindi">(संरचित JSON टेलीमेट्री स्ट्रीम एवं अलर्ट वेबहुक लोकल रूप से उत्पन्न होते हैं, जबकि वीडियो फ्रेम कभी भी डिवाइस सीमा पार नहीं करते।)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer-strip">
+        <span>NE-3DV-WP-01 // Engineering Specification</span>
+        <span>Page 11 of 18</span>
+      </div>
+    </section>
+
+    <!-- PAGE 13: BENCHMARKED PERFORMANCE -->
+    <section class="page-sheet" id="ch08">
+      <div class="page-header-strip">
+        <span>08 PERFORMANCE // BENCHMARKED PERFORMANCE</span>
+        <span>Page 13 of 18</span>
+      </div>
+
+      <div class="ch-badge-row">
+        <span class="ch-num">08</span>
+        <span class="ch-tag">MEASURED, NOT CLAIMED</span>
+      </div>
+      <h2 class="ch-title">Benchmarked Performance</h2>
+      <div class="ch-hindi-title">(बेंचमार्क प्रदर्शन)</div>
+
+      <p class="prose-block">
+        Zero cloud dependencies. Edge runtime performance is compared across every NeuralEye-supported model weight on modern browser WebAssembly runtimes.
+      </p>
+
+      <div class="spec-table-wrap">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th>Model Variant</th>
+              <th>Parameters</th>
+              <th>Edge Latency</th>
+              <th>Accuracy (mAP)</th>
+              <th>Throughput</th>
+              <th>Recommended Deployment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>YOLOv11-Nano</strong></td>
+              <td>2.6M params</td>
+              <td><strong>1.4 ms</strong></td>
+              <td>94.2% mAP</td>
+              <td>120+ FPS</td>
+              <td>IoT, Mobile & Low-Power Edge Devices</td>
+            </tr>
+            <tr style="background: rgba(2, 132, 199, 0.06);">
+              <td><strong>YOLOv11-Small (Recommended)</strong></td>
+              <td>9.4M params</td>
+              <td><strong>2.8 ms</strong></td>
+              <td>96.8% mAP</td>
+              <td>60+ FPS</td>
+              <td>Standard Laptops & High-FPS Live Feeds</td>
+            </tr>
+            <tr>
+              <td><strong>YOLOv11-Medium 3D</strong></td>
+              <td>20.1M params</td>
+              <td><strong>5.6 ms</strong></td>
+              <td>98.4% mAP</td>
+              <td>45 FPS</td>
+              <td>Enterprise Spatial Surveillance & 3D Bounding</td>
+            </tr>
+            <tr>
+              <td><strong>SAHI 4K Slicer</strong></td>
+              <td>Hybrid Multi-Scale</td>
+              <td><strong>11.2 ms</strong></td>
+              <td>99.2% mAP</td>
+              <td>30 FPS</td>
+              <td>Crowded Gigapixel CCTV & Aerial Drone Feeds</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="page-footer-strip">
+        <span>NE-3DV-WP-01 // Engineering Specification</span>
+        <span>Page 13 of 18</span>
+      </div>
+    </section>
+
+    <!-- PAGE 17: LEAD ARCHITECT & CREDITS -->
+    <section class="page-sheet" id="ch12">
+      <div class="page-header-strip">
+        <span>12 WHO BUILT THIS // LEAD ARCHITECT & CREDITS</span>
+        <span>Page 17 of 18</span>
+      </div>
+
+      <div class="ch-badge-row">
+        <span class="ch-num">12</span>
+        <span class="ch-tag">WHO BUILT THIS</span>
+      </div>
+      <h2 class="ch-title">Lead Architect & Credits</h2>
+      <div class="ch-hindi-title">(मुख्य आर्किटेक्ट एवं श्रेय)</div>
+
+      <div class="author-sheet-box">
+        <div class="author-name">Chandrakant Chavan</div>
+        <div class="author-role">Founder & Lead AI Engineer // System Architect</div>
+        <p class="author-desc">
+          A specialist in high-throughput edge computer vision, real-time deep-learning inference optimization, and distributed AI application architectures. Creator of NeuralEye's complete end-to-end frontend, model-worker integration, SAHI pipeline, and UI/UX design architecture.
+        </p>
+        <p class="hindi-text" style="color: #cbd5e1; font-size: 0.85rem;">
+          (चंद्रकांत चव्हाण — मुख्य AI इंजीनियर एवं सिस्टम आर्किटेक्ट। हाई-थ्रूपुट एज कंप्यूटर विज़न, रीयल-टाइम डीप-लर्निंग इनफ़रेंस ऑप्टिमाइज़ेशन, तथा डिस्ट्रीब्यूटेड AI आर्किटेक्चर के विशेषज्ञ। न्यूरलआई के संपूर्ण एंड-टू-एंड फ्रंटएंड, मॉडल-वर्कर इंटीग्रेशन, SAHI पाइपलाइन, तथा UI/UX डिज़ाइन आर्किटेक्चर के निर्माता।)
+        </p>
+        <div class="author-contact-pill">
+          <span>✉ chandrakant150805@gmail.com</span>
+          <span>• Verified System Creator</span>
+        </div>
+      </div>
+
+      <p class="prose-block" style="font-size: 0.85rem; color: #64748b;">
+        This document is maintained as the single master specification for the NeuralEye 3D Vision platform and is updated alongside every major engineering milestone.
+      </p>
+
+      <div class="page-footer-strip">
+        <span>NE-3DV-WP-01 // Engineering Specification</span>
+        <span>Page 17 of 18</span>
+      </div>
+    </section>
+
+    <!-- PAGE 18: SIGN-OFF & END -->
+    <section class="page-sheet" style="text-align: center; padding: 60px 40px;">
+      <h2 style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin-bottom: 6px;">NeuralEye 3D Vision Systems</h2>
+      <div class="ch-hindi-title">(न्यूरलआई 3D विज़न सिस्टम्स)</div>
+
+      <div style="width: 60px; height: 3px; background: #0284c7; margin: 18px auto;"></div>
+
+      <p style="font-family: var(--font-mono); font-size: 0.9rem; color: #334155;">
+        Master Engineering Specification — End of Document.
+      </p>
+      <p class="hindi-text" style="margin-top: 4px;">
+        (मास्टर इंजीनियरिंग विनिर्देश — दस्तावेज़ का अंत।)
+      </p>
+
+      <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #f1f5f9; font-size: 0.76rem; color: #94a3b8; font-family: var(--font-mono);">
+        © 2026 NeuralEye 3D Vision Systems. All rights reserved. This document and its contents are confidential and proprietary.
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

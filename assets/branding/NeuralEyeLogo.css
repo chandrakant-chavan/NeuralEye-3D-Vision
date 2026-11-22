@@ -1,0 +1,10 @@
+.neural-eye-logo-wrap {
+  width: min(1536px, 100%);
+}
+
+.neural-eye-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(1.22);
+}

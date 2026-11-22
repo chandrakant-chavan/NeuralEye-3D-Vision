@@ -1,0 +1,129 @@
+/* NeuralEye Official Brand Logo Styles */
+.neuraleye-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  line-height: 1;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+}
+
+.neuraleye-brand-logo .logo-img {
+  display: block;
+  width: auto;
+  height: 38px;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+  pointer-events: none;
+}
+
+/* Light mode defaults: show light logo, hide dark logo */
+.neuraleye-brand-logo .logo-img-light {
+  display: block;
+}
+.neuraleye-brand-logo .logo-img-dark {
+  display: none;
+}
+
+/* Dark mode triggers: show dark logo, hide light logo */
+[data-theme="dark"] .neuraleye-brand-logo .logo-img-light,
+.neuraleye-dark .neuraleye-brand-logo .logo-img-light,
+.theme-dark .neuraleye-brand-logo .logo-img-light,
+body.dark .neuraleye-brand-logo .logo-img-light {
+  display: none !important;
+}
+
+[data-theme="dark"] .neuraleye-brand-logo .logo-img-dark,
+.neuraleye-dark .neuraleye-brand-logo .logo-img-dark,
+.theme-dark .neuraleye-brand-logo .logo-img-dark,
+body.dark .neuraleye-brand-logo .logo-img-dark {
+  display: block !important;
+}
+
+/* Explicit theme prop override */
+.neuraleye-brand-logo.theme-light .logo-img-light {
+  display: block !important;
+}
+.neuraleye-brand-logo.theme-light .logo-img-dark {
+  display: none !important;
+}
+
+.neuraleye-brand-logo.theme-dark .logo-img-dark {
+  display: block !important;
+}
+.neuraleye-brand-logo.theme-dark .logo-img-light {
+  display: none !important;
+}
+
+/* Size Variants */
+.neuraleye-brand-logo.logo-header .logo-img {
+  height: 38px;
+}
+
+.neuraleye-brand-logo.logo-footer .logo-img {
+  height: 32px;
+}
+
+.neuraleye-brand-logo.logo-compact .logo-img {
+  height: 26px;
+}
+
+.neuraleye-brand-logo.logo-large .logo-img {
+  height: 48px;
+}
+
+/* Brand Chip (3D VISION Badge) - Exact Match to Reference */
+.neuraleye-brand-logo .brand-chip {
+  color: #1e3aec;
+  background: #d4e2ff;
+  border: 1px solid rgba(30, 58, 236, 0.16);
+  border-radius: 9999px;
+  padding: 3.5px 11px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.25px;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+}
+
+/* Dark Mode Brand Chip */
+[data-theme="dark"] .neuraleye-brand-logo .brand-chip,
+.neuraleye-dark .neuraleye-brand-logo .brand-chip,
+.theme-dark .neuraleye-brand-logo .brand-chip,
+body.dark .neuraleye-brand-logo .brand-chip {
+  color: #00f2fe !important;
+  background: rgba(0, 242, 254, 0.14) !important;
+  border: 1px solid rgba(0, 242, 254, 0.42) !important;
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.25) !important;
+}
+
+/* Responsive adjustment for Mobile screens */
+@media (max-width: 768px) {
+  .neuraleye-brand-logo.logo-header .logo-img {
+    height: 30px;
+  }
+  .neuraleye-brand-logo.logo-footer .logo-img {
+    height: 28px;
+  }
+  .neuraleye-brand-logo .brand-chip {
+    font-size: 9.5px;
+    padding: 2.5px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .neuraleye-brand-logo.logo-header .logo-img {
+    height: 28px;
+  }
+  .neuraleye-brand-logo {
+    gap: 7px;
+  }
+}

@@ -1,0 +1,24 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  background: #eef2fa;
+  padding: 24px;
+}
+
+.logo-stage {
+  width: min(1536px, 100%);
+}
+
+.neuraleye-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(1.22);
+}

@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.eggs/
+*.egg
+venv/
+env/
+ENV/
+build/
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Models
+*.pt
+!yolov8n.pt
+*.onnx
+!frontend/public/models/*.onnx
+node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Docker
+.dockerignore
+
+# Sensitive Inquiries & Contact Logs
+inquiries.json
+backend/inquiries.json
+app.log
+
+# Scratch & Archive
+archive/
+scratch/
+assets/source-media/
+docs/*.pdf
+
+# Jupyter
+.ipynb_checkpoints

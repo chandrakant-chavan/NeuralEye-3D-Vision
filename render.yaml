@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: neuraleye-3d-vision
+    runtime: python
+    plan: free
+    buildCommand: npm --prefix frontend install && npm --prefix frontend run build && pip install -r requirements.txt
+    startCommand: uvicorn backend.api.main:app --host 0.0.0.0 --port $PORT --workers 1 --timeout-keep-alive 300
+    healthCheckPath: /healthz
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10.13"
+      - key: PORT
+        value: "10000"
+      - key: PYTHONPATH
+        value: "."
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: MODEL_PATH
+        value: "yolov8n.pt"
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: CONFIDENCE_THRESHOLD
+        value: "0.25"
+      - key: INPUT_SIZE
+        value: "640"
+      - key: USE_HALF
+        value: "false"
+      - key: ENVIRONMENT
+        value: "production"
+      - key: KEEP_ALIVE_URL
+        value: "https://neuraleye-3d-vision.onrender.com"
