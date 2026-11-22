@@ -8872,8 +8872,8 @@ button {
   border-radius: 22px;
   padding: 16px 18px;
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
   border: 1px solid rgba(255, 255, 255, 0.85);
   box-shadow: 
     0 24px 48px -12px rgba(15, 23, 42, 0.16),
