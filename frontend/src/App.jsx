@@ -4,7 +4,7 @@ import {
   Eye, Home, BarChart3, Camera, FileText, Settings,
   Sun, Moon, ChevronDown, ChevronRight, Menu, X, Zap, Activity,
   ShieldCheck, Cpu, Layers, Gauge, Code,
-  Workflow, Terminal, Server, ArrowLeft
+  Workflow, Terminal, Server, ArrowLeft, Download
 } from 'lucide-react';
 import ImageDetection from './components/ImageDetection';
 import WebcamDetection from './components/WebcamDetection';
@@ -774,6 +774,19 @@ function NavigationShell({ children }) {
                 >
                   <span className="mobile-nav-icon"><ShieldCheck size={18} style={{ color: 'var(--accent-cyan)' }} /></span>
                   <span className="mobile-nav-label">Security Center (6 Layers)</span>
+                  <ChevronRight size={16} className="mobile-nav-arrow" />
+                </button>
+                <button
+                  type="button"
+                  className="mobile-nav-item"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    window.dispatchEvent(new CustomEvent('open-pwa-install'));
+                  }}
+                  style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer' }}
+                >
+                  <span className="mobile-nav-icon"><Download size={18} style={{ color: 'var(--accent-blue, #0052cc)' }} /></span>
+                  <span className="mobile-nav-label">Install App (PWA)</span>
                   <ChevronRight size={16} className="mobile-nav-arrow" />
                 </button>
               </div>
