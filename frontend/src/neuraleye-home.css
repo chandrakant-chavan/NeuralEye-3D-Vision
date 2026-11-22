@@ -2341,6 +2341,32 @@ button {
     transform: scale(0.98);
   }
 
+  .mobile-install-cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 11px;
+    margin-top: 8px;
+    border: 1px solid rgba(0, 82, 204, 0.25);
+    border-radius: 14px;
+    background: rgba(0, 82, 204, 0.08);
+    color: var(--accent-blue, #0052cc);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .dark .mobile-install-cta-btn {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+  }
+  .mobile-install-cta-btn:active {
+    transform: scale(0.98);
+  }
+
   .hero-section {
     grid-template-columns: 1fr;
     margin-top: 20px;

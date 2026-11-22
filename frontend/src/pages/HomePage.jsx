@@ -5,7 +5,7 @@ import {
   Cpu, FileText, Home, Menu, Moon, Play, Rocket, Settings,
   ShieldCheck, Sun, Video, X, Zap, Box,
   Sparkles, Send, Terminal, Activity, Layers, Database,
-  Gauge, Clock, Check, HelpCircle, Search, RefreshCw, Code
+  Gauge, Clock, Check, HelpCircle, Search, RefreshCw, Code, Download
 } from "lucide-react";
 import { ThemeContext } from "../context/ThemeContext";
 import NeuralEyeLogo from "../components/NeuralEyeLogo";
@@ -556,20 +556,47 @@ export default function HomePage({ isBackendReady }) {
                 <span className="mobile-nav-label">Security Center (6 Layers)</span>
                 <ChevronRight size={16} className="mobile-nav-arrow" />
               </button>
+              <button
+                type="button"
+                className="mobile-nav-item"
+                onClick={() => {
+                  setMenuOpen(false);
+                  window.dispatchEvent(new CustomEvent('open-pwa-install'));
+                }}
+                style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer' }}
+              >
+                <span className="mobile-nav-icon"><Download size={18} style={{ color: 'var(--accent-blue, #0052cc)' }} /></span>
+                <span className="mobile-nav-label" style={{ fontWeight: 700, color: 'var(--accent-blue, #0052cc)' }}>Install App (PWA)</span>
+                <ChevronRight size={16} className="mobile-nav-arrow" />
+              </button>
             </div>
 
-            {/* Quick Action Button */}
-            <button
-              type="button"
-              className="mobile-cta-btn"
-              onClick={() => {
-                setMenuOpen(false);
-                navigate("/dashboard");
-              }}
-            >
-              <Play size={15} />
-              <span>Launch Live Detector</span>
-            </button>
+            {/* Quick Action Buttons */}
+            <div className="mobile-cta-group" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button
+                type="button"
+                className="mobile-cta-btn"
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/dashboard");
+                }}
+              >
+                <Play size={15} />
+                <span>Launch Live Detector</span>
+              </button>
+
+              <button
+                type="button"
+                className="mobile-install-cta-btn"
+                onClick={() => {
+                  setMenuOpen(false);
+                  window.dispatchEvent(new CustomEvent('open-pwa-install'));
+                }}
+              >
+                <Download size={15} />
+                <span>Install App on Phone</span>
+              </button>
+            </div>
           </nav>
         )}
       </header>
