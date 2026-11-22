@@ -18,6 +18,7 @@ import ReportsPage from './pages/ReportsPage';
 import { ThemeContext } from './context/ThemeContext';
 import NeuralEyeLogo from './components/NeuralEyeLogo';
 import SecurityCenterModal from './components/SecurityCenterModal';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 import './neuraleye-home.css';
 import './index.css';
 import config from './config';
@@ -782,6 +783,9 @@ function NavigationShell({ children }) {
 
         {/* NeuralEye Enterprise Security Center Modal */}
         <SecurityCenterModal isOpen={securityModalOpen} onClose={() => setSecurityModalOpen(false)} />
+
+        {/* NeuralEye PWA Install Prompt Banner */}
+        <PWAInstallPrompt />
 
         {/* Page Views */}
         <main className={`main-content-scroll ${isHome ? 'main-scroll-home' : ''}`}>

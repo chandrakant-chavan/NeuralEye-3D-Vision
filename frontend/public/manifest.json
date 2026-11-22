@@ -1,0 +1,24 @@
+{
+  "name": "NeuralEye 3D Vision Systems",
+  "short_name": "NeuralEye",
+  "description": "Real-time edge computer vision and 3D object detection engine powered by WebAssembly SIMD.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#0a0d14",
+  "theme_color": "#0052cc",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/neuraleye-icon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
