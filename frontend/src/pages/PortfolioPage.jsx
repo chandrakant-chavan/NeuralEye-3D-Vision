@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Cpu, Play, Send, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Cpu, Play, Send, ShieldCheck, ExternalLink } from 'lucide-react';
 
 const TECH_STACK = [
   'YOLOv11', 'ONNX Runtime Web', 'WebAssembly (WASM)', 'FastAPI', 'PyTorch',
@@ -66,6 +66,20 @@ export default function PortfolioPage() {
       <p className="section-subtext">
         Specializing in high-throughput edge computer vision, real-time deep learning inference optimization, and distributed AI application architectures.
       </p>
+
+      {/* Direct Live Portfolio Link Banner */}
+      <div style={{ marginTop: '16px', marginBottom: '22px' }}>
+        <a
+          href="https://chandrakantchavan-portfolio.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="primary-button"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
+        >
+          <ExternalLink size={16} />
+          <span>Open Live Portfolio (chandrakantchavan-portfolio.vercel.app)</span>
+        </a>
+      </div>
 
       {/* Tech Stack Chips */}
       <div className="portfolio-tech-strip">

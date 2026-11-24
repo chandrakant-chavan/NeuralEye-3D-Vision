@@ -17,13 +17,15 @@ import {
   IconAnalytics,
 } from "../components/FeatureGlassIcons";
 
+const PORTFOLIO_URL = "https://chandrakantchavan-portfolio.vercel.app/";
+
 const navItems = [
   { label: "Home", icon: Home, path: "/" },
   { label: "Dashboard", icon: BarChart3, path: "/dashboard" },
   { label: "Live View", icon: Camera, path: "/live" },
   { label: "Reports", icon: FileText, path: "/reports" },
   { label: "Settings", icon: Settings, path: "/settings" },
-  { label: "Portfolio", path: "/portfolio" },
+  { label: "Portfolio", path: PORTFOLIO_URL, isExternal: true },
   { label: "Contact", path: "/contact" },
 ];
 
@@ -321,7 +323,9 @@ export default function HomePage({ isBackendReady }) {
   const handleNav = (item) => {
     setActive(item.label);
     setMenuOpen(false);
-    if (item.path === "/") {
+    if (item.isExternal || item.path.startsWith("http")) {
+      window.open(item.path, "_blank", "noopener,noreferrer");
+    } else if (item.path === "/") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       navigate(item.path);
@@ -435,14 +439,14 @@ export default function HomePage({ isBackendReady }) {
               <div className="profile-menu">
                 <strong>NeuralEye Workspace</strong>
                 <span>AI Vision Platform</span>
-                <button
-                  onClick={() => {
-                    setProfileOpen(false);
-                    navigate("/portfolio");
-                  }}
+                <a
+                  href={PORTFOLIO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setProfileOpen(false)}
                 >
                   Portfolio
-                </button>
+                </a>
                 <button
                   onClick={() => {
                     setProfileOpen(false);
@@ -1245,14 +1249,16 @@ export default function HomePage({ isBackendReady }) {
               Launch Live Workbench
               <ArrowRight size={19} />
             </button>
-            <button
+            <a
+              href={PORTFOLIO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="secondary-button"
-              onClick={() => navigate("/portfolio")}
             >
               <Cpu size={18} />
               Developer Portfolio
               <ArrowRight size={17} />
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -1266,7 +1272,14 @@ export default function HomePage({ isBackendReady }) {
             </div>
           </div>
           <div className="footer-nav-centered">
-            <button type="button" className="footer-link-btn" onClick={() => navigate("/portfolio")}>Developer Portfolio</button>
+            <a
+              href={PORTFOLIO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link-btn"
+            >
+              Developer Portfolio
+            </a>
             <span className="footer-dot">•</span>
             <button type="button" className="footer-link-btn" onClick={() => navigate("/contact")}>Contact Developer</button>
             <span className="footer-dot">•</span>

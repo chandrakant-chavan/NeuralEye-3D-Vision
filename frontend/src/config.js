@@ -6,8 +6,8 @@ const stripTrailingSlash = (s) => (typeof s === 'string' ? s.replace(/\/+$/, '')
 const config = {
   API_BASE_URL: stripTrailingSlash(rawApiBaseUrl),
   API_V1_STR: '/api/v1',
-  // Change this to your portfolio website URL (or define VITE_PORTFOLIO_URL in .env)
-  PORTFOLIO_URL: import.meta.env.VITE_PORTFOLIO_URL || 'https://github.com'
+  // Personal developer portfolio website URL
+  PORTFOLIO_URL: import.meta.env.VITE_PORTFOLIO_URL || 'https://chandrakantchavan-portfolio.vercel.app/'
 };
 
 export default config;

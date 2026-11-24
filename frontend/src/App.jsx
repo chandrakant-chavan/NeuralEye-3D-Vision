@@ -607,9 +607,15 @@ function NavigationShell({ children }) {
             <NavLink to="/settings" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
               <Settings size={16} /> Settings
             </NavLink>
-            <NavLink to="/portfolio" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
+            <a
+              href={config.PORTFOLIO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-link"
+              title="Chandrakant Chavan Portfolio"
+            >
               Portfolio
-            </NavLink>
+            </a>
             <NavLink to="/contact" className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}>
               Contact
             </NavLink>
@@ -655,9 +661,14 @@ function NavigationShell({ children }) {
                 <div className="profile-menu">
                   <strong>NeuralEye Workspace</strong>
                   <span>AI Vision Platform</span>
-                  <Link to="/portfolio" onClick={() => setProfileOpen(false)}>
+                  <a
+                    href={config.PORTFOLIO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setProfileOpen(false)}
+                  >
                     Portfolio
-                  </Link>
+                  </a>
                   <Link to="/settings" onClick={() => setProfileOpen(false)}>
                     Settings
                   </Link>
@@ -756,11 +767,17 @@ function NavigationShell({ children }) {
                   <span className="mobile-nav-label">Settings</span>
                   <ChevronRight size={16} className="mobile-nav-arrow" />
                 </NavLink>
-                <NavLink to="/portfolio" className={({ isActive }) => `mobile-nav-item ${isActive ? "active" : ""}`} onClick={() => setMenuOpen(false)}>
+                <a
+                  href={config.PORTFOLIO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mobile-nav-item"
+                  onClick={() => setMenuOpen(false)}
+                >
                   <span className="mobile-nav-icon"><Eye size={18} /></span>
                   <span className="mobile-nav-label">Portfolio</span>
                   <ChevronRight size={16} className="mobile-nav-arrow" />
-                </NavLink>
+                </a>
                 <NavLink to="/contact" className={({ isActive }) => `mobile-nav-item ${isActive ? "active" : ""}`} onClick={() => setMenuOpen(false)}>
                   <span className="mobile-nav-icon"><Activity size={18} /></span>
                   <span className="mobile-nav-label">Contact</span>
@@ -815,7 +832,14 @@ function NavigationShell({ children }) {
                 </div>
               </div>
               <div className="footer-nav-centered">
-                <Link to="/portfolio" className="footer-link-btn">Developer Portfolio</Link>
+                <a
+                  href={config.PORTFOLIO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link-btn"
+                >
+                  Developer Portfolio
+                </a>
                 <span className="footer-dot">•</span>
                 <Link to="/contact" className="footer-link-btn">Contact Developer</Link>
                 <span className="footer-dot">•</span>
