@@ -1,0 +1,7 @@
+{
+  "name": "neuraleye-3d-vision-root",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  }
+}
